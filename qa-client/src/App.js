@@ -22,7 +22,7 @@ class App extends Component {
 //http://localhost:8080/
     async getData() {
 
-        let url = `${this.API_URL}/questions`; // URL of the API.
+        let url = `${API_URL}/questions`; // URL of the API.
         let result = await fetch(url); // Get the data
         let json = await result.json(); // Turn it into json
 
