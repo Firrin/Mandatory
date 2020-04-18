@@ -13,7 +13,7 @@ const app = express(); // Get the express app object.
 app.use(bodyParser.json()); // Add middleware that parses JSON from the request body.
 app.use(morgan('combined')); // Add middleware that logs all http requests to the console.
 app.use(cors()); // Avoid CORS errors. https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
-app.use(express.static('../qa_client/build'))
+app.use(express.static('../qa-client/build'))
 
 
 const qaDb = require("./qa_db")(mongoose)
