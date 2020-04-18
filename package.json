@@ -4,10 +4,10 @@
   "description": "AWP mern stack mandatory",
   "main": "index.js",
   "scripts": {
-    "start": "cd qa-api && node app.js",
+    "start": "cd qa_api && node app.js",
     "dev": "cd qa-client && npm start",
     "test": "cd qa-client && npm test",
-    "preinstall": "cd qa-api && npm install",
+    "preinstall": "cd qa_api && npm install",
     "install": "cd qa-client && npm install",
     "build": "cd qa-client && npm run build"
   },
