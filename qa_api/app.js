@@ -5,34 +5,33 @@ const morgan = require('morgan');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
+
 /**** Configuration ****/
-const appName = "Q&A"; // Change the name of your server app!
 const port = process.env.PORT || 8080; // Pick port 8080 if the PORT env variable is empty.
 const app = express(); // Get the express app object.
 
+app.use(cors()); // Avoid CORS errors. https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
 app.use(bodyParser.json()); // Add middleware that parses JSON from the request body.
 app.use(morgan('combined')); // Add middleware that logs all http requests to the console.
-app.use(cors()); // Avoid CORS errors. https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
 app.use(express.static('../qa-client/build'))
 
 
+/**** Database ****/
 const qaDb = require("./qa_db")(mongoose)
 
-/**** Routes ****/
 
 /**** Routes ****/
 app.get("/api/questions", (req, res) => {
-    // Get all questions. Put question into json response when it resolves.
+
     qaDb.getQuestions().then(questions => res.json(questions));
 });
 
-// Get question
 app.get("/api/questions/:id", (req, res) => {
     const id = req.params.id;
     qaDb.getQuestion(id).then(question => res.json(question));
 });
 
-// Post a new question
+
 app.post("/api/questions", (req, res) => {
     const question = {
         question: req.body.question,
@@ -57,32 +56,15 @@ app.put("/api/questions/:id/answers/:answerId/vote", (req, res) => {
         .then(updatedvote => res.json(updatedvote));
 });
 
-
+// "Redirect" all get requests (except for the routes specified above) to React's entry point (index.html) to be handled by Reach router
+// It's important to specify this route as the very last one to prevent overriding all of the other routes
 app.get('*', (req, res) =>
     res.sendFile(path.resolve('..', 'client', 'build', 'index.html'))
 );
-/*
-// PostAnswer
-app.post('/api/questions/:id/answers', (req, res) => {
-    const id = parseInt(req.params.id);
-    const text = req.body.text;
-    const question = questions.find(q => q.id === id);
-    question.answers.push(text);
-    console.log(question);
-    res.json({msg: "Answer added", question: question});
-});
-
-
-app.put("/api/questions/:id/comments/:commentId/vote", (req, res) => {
-    questionDAL
-        .vote(req.params.id, req.params.commentId)
-        .then(updatedvote => res.json(updatedvote));
-});
-*/
 
 /**** Start! ****/
 
-/**** Start ****/
+
 const url = process.env.MONGODB_URL || 'mongodb://localhost/qaDb';
 mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(async () => {

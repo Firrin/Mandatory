@@ -26,7 +26,6 @@ class Question extends Component {
                     <ul>
                         {question.answers.map(h => (
                             <div key={h._id}>
-
                                     <h3>{h.text}</h3>
                                     <p>Votes: {h.votes}</p>
                                     <button

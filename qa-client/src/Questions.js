@@ -17,7 +17,7 @@ class Questions extends Component {
             <ul>
                 {questions}
             </ul>
-                <Link to="/AskQuestion">Post new question</Link>
+
             </>
         );
     }

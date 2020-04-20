@@ -27,22 +27,19 @@ class App extends Component {
         let json = await result.json(); // Turn it into json
 
         return this.setState({
-            // Set it in the state
             questions: json
         });
     }
 
     getQuestion(id) {
-        // Find the relevant question by id
         return this.state.questions.find(q => q._id === id);
     }
 
-    // method for posting a question
     async askQuestion(question) {
         this.postData(question);
     }
 
-    // the above method calls this method for the post request
+
     async postData(question) {
         let url = `${this.API_URL}/questions`;
         fetch(url, {
@@ -60,7 +57,7 @@ class App extends Component {
             });
     }
 
-    // post new comments
+
     postAnswer(id, text) {
         let url = `${this.API_URL}/questions/${id}/answers/`;
 
